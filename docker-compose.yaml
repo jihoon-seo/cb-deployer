@@ -1,0 +1,93 @@
+version: "3.3"
+services:
+  # Metrics store
+  influxdb:
+    image: influxdb:latest
+    container_name: etri_influxdb
+    ports:
+      - "8083:8083"
+      - "8086:8086"
+    env_file:
+      - 'env.influxdb'
+    volumes:
+      - ./data/influxdb/data:/var/lib/influxdb
+
+  # Metrics UI
+  grafana:
+    image: grafana/grafana
+    container_name: etri_grafana
+    ports:
+      - "3100:3000"
+    depends_on:
+      - influxdb
+    env_file:
+      - 'env.grafana'
+    links:
+      - influxdb
+    volumes:
+      - ./data/grafana/data:/var/lib/grafana
+      - ./data/grafana/provisioning:/etc/grafana/provisioning
+    user: "0"
+
+  # Trace store and UI
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    container_name: etri_jaeger
+    ports:
+      - "14268:14268"
+      - "16686:16686"
+
+  # Fake API
+  fake_api:
+    image: jaxgeller/lwan
+    container_name: fake_api
+    volumes:
+      - ./data/lwan:/lwan/wwwroot
+    ports:
+      - "8100:8080"
+
+  # HMAC Server
+  hmac_site:
+    build:
+      context: ./web
+    container_name: hmac_server
+    volumes:
+      - ./web/public:/app/public
+      - ./web/conf:/app/conf
+    ports:
+      - "8010:8010"
+
+  # CB-SPIDER
+  cb-spider:
+    build:
+      context: ./cb-spider
+    container_name: cb-spider
+    ports:
+      - "1024:1024"
+
+  # CB-TUMBLEBUG
+  cb-tumblebug:
+    build:
+      context: ./cb-tumblebug
+    container_name: cb-rumblebug
+    ports:
+      - "1323:1323"
+    depends_on:
+      - cb-spider
+
+  # CB-RESTAPIGW SERVICE
+  cb-restapigw:
+    build:
+      context: ./cb-restapigw
+    container_name: cb-restapigw
+    volumes:
+      - ./cb-restapigw/conf:/app/conf
+    ports:
+      - "8000:8000"
+    depends_on:
+      - influxdb
+      - jaeger
+      - hmac_site
+      - fake_api
+      - cb-spider
+      - cb-tumblebug
