@@ -38,24 +38,24 @@ services:
       - "16686:16686"
 
   # Fake API
-  fake_api:
-    image: jaxgeller/lwan
-    container_name: fake_api
-    volumes:
-      - ./data/lwan:/lwan/wwwroot
-    ports:
-      - "8100:8080"
+#  fake_api:
+#    image: jaxgeller/lwan
+#    container_name: fake_api
+#    volumes:
+#      - ./data/lwan:/lwan/wwwroot
+#    ports:
+#      - "8100:8080"
 
   # HMAC Server
-  hmac_site:
-    build:
-      context: ./web
-    container_name: hmac_server
-    volumes:
-      - ./web/public:/app/public
-      - ./web/conf:/app/conf
-    ports:
-      - "8010:8010"
+#  hmac_site:
+#    build:
+#      context: ./web
+#    container_name: hmac_server
+#    volumes:
+#      - ./web/public:/app/public
+#      - ./web/conf:/app/conf
+#    ports:
+#      - "8010:8010"
 
   # CB-SPIDER
   cb-spider:
@@ -69,7 +69,7 @@ services:
   cb-tumblebug:
     build:
       context: ./cb-tumblebug
-    container_name: cb-rumblebug
+    container_name: cb-tumblebug
     ports:
       - "1323:1323"
     depends_on:
@@ -87,7 +87,7 @@ services:
     depends_on:
       - influxdb
       - jaeger
-      - hmac_site
-      - fake_api
+#      - hmac_site
+#      - fake_api
       - cb-spider
       - cb-tumblebug

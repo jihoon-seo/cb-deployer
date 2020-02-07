@@ -27,7 +27,7 @@ RUN sed -i "s|~/go/src/github.com/cloud-barista/cb-spider|/go/src/github.com/clo
 
 # make dirver shared library
 ENV CBSPIDER_ROOT=/go/src/github.com/cloud-barista/cb-spider
-RUN cd /go/src/github.com/cloud-barista/cb-spider/cloud-control-manager/cloud-driver/drivers/aws && ./build_driver_lib.sh
+#RUN cd /go/src/github.com/cloud-barista/cb-spider/ && ./build_all_driver_lib.sh
 
 # cb-spider build
 RUN cd /go/src/github.com/cloud-barista/cb-spider/api-runtime/rest-runtime && CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags '-w -extldflags "-static"' -o cb-spider -v

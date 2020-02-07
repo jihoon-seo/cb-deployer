@@ -45,7 +45,7 @@ COPY --from=builder /go/src/github.com/cloud-barista/cb-tumblebug/src/mcism .
 COPY --from=builder /go/src/github.com/cloud-barista/cb-tumblebug/conf ./conf
 COPY ./run.sh .
 
-RUN sed -i "s|~/go/src/github.com/cloud-barista/cb-tumblebug|/app|g" ./conf/setup.env
+RUN sed -i "s|\$GOPATH/src/github.com/cloud-barista/cb-tumblebug|/app|g" ./conf/setup.env
 RUN sed -i "s|localhost:1024|cb-spider:1024|g" ./conf/setup.env
 
 CMD [ "./run.sh" ]
