@@ -17,4 +17,8 @@ data/influxdb/data/data/_internal/
 data/influxdb/data/data/cbrestapigw/
 data/influxdb/data/wal/
 
+*.db
+package.json
+yarn.lock
+
 web/hmac-server
