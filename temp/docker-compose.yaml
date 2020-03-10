@@ -71,7 +71,7 @@ services:
 
   # CB-TUMBLEBUG
   cb-tumblebug:
-    image: cloudbaristahub/cb-tumblebug:v0.1-20200304-withrestapigw
+    image: cloudbaristahub/cb-tumblebug:v0.1-20200304
     container_name: cb-tumblebug
     ports:
       - "1323:1323"
@@ -80,14 +80,22 @@ services:
       - cb-spider
     volumes:
       - /root/go/src/github.com/cloud-barista/cb-tumblebug/meta_db:/app/meta_db
+    environment:
+      - SPIDER_URL=http://cb-restapigw:8000
 
+# The priority used by Compose to choose which env var value to use:
+# 1. Compose file
+# 2. Shell environment variables
+# 3. Environment file
+# 4. Dockerfile
+# 5. Variable is not defined
 
   # CB-RESTAPIGW SERVICE
   cb-restapigw:
     image: cloudbaristahub/cb-restapigw:v0.1-20191120
     container_name: cb-restapigw
-#   volumes:
-#     - ./cb-restapigw/conf:/app/conf
+    volumes:
+      - ../cb-restapigw/conf:/app/conf
     ports:
       - "8000:8000"
 #   depends_on:
