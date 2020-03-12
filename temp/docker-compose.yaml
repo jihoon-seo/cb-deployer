@@ -92,7 +92,7 @@ services:
 
   # CB-RESTAPIGW SERVICE
   cb-restapigw:
-    image: cloudbaristahub/cb-restapigw:v0.1-20191120
+    image: cloudbaristahub/cb-restapigw:v0.1-20200312
     container_name: cb-restapigw
     volumes:
       - ../cb-restapigw/conf:/app/conf
