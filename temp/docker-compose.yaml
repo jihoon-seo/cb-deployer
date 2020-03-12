@@ -105,3 +105,11 @@ services:
 #     - fake_api
 #     - cb-spider
 #     - cb-tumblebug
+#
+# cb-restapigw:
+#   image: nginx
+#   container_name: cb-restapigw
+#   ports:
+#     - "8000:8000"
+#   volumes:
+#     - ./nginx.conf:/etc/nginx/conf.d/cb-restapigw.conf:ro
