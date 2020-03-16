@@ -3,25 +3,25 @@ services:
   # Metrics store
   influxdb:
     image: influxdb:latest
-    container_name: cb-apigw-influxdb
+    container_name: etri_influxdb
     ports:
       - "8083:8083"
       - "8086:8086"
     env_file:
-      - './conf/env.influxdb'
+      - 'env.influxdb'
     volumes:
       - ./data/influxdb/data:/var/lib/influxdb
 
   # Metrics UI
   grafana:
     image: grafana/grafana
-    container_name: cb-apigw-grafana
+    container_name: etri_grafana
     ports:
       - "3100:3000"
     depends_on:
       - influxdb
     env_file:
-      - './conf/env.grafana'
+      - 'env.grafana'
     links:
       - influxdb
     volumes:
@@ -32,7 +32,7 @@ services:
   # Trace store and UI
   jaeger:
     image: jaegertracing/all-in-one:latest
-    container_name: cb-apigw-jaeger
+    container_name: etri_jaeger
     ports:
       - "14268:14268"
       - "16686:16686"
@@ -59,58 +59,35 @@ services:
 
   # CB-SPIDER
   cb-spider:
-    image: cloudbaristahub/cb-spider:v0.1-20200316
+    build:
+      context: ./cb-spider
     container_name: cb-spider
     ports:
       - "1024:1024"
-    volumes:
-      - /root/go/src/github.com/cloud-barista/cb-spider/meta_db:/root/go/src/github.com/cloud-barista/cb-spider/meta_db
-    depends_on:
-      - cb-restapigw
-
 
   # CB-TUMBLEBUG
   cb-tumblebug:
-    image: cloudbaristahub/cb-tumblebug:v0.1-20200313
+    build:
+      context: ./cb-tumblebug
     container_name: cb-tumblebug
     ports:
       - "1323:1323"
     depends_on:
-      - cb-restapigw
       - cb-spider
-    volumes:
-      - /root/go/src/github.com/cloud-barista/cb-tumblebug/meta_db:/app/meta_db
-    environment:
-      - SPIDER_URL=http://cb-restapigw:8000/spider
-
-# The priority used by Compose to choose which env var value to use:
-# 1. Compose file
-# 2. Shell environment variables
-# 3. Environment file
-# 4. Dockerfile
-# 5. Variable is not defined
 
   # CB-RESTAPIGW SERVICE
   cb-restapigw:
-    image: cloudbaristahub/cb-restapigw:v0.1-20200312
+    build:
+      context: ./cb-restapigw
     container_name: cb-restapigw
     volumes:
-      - ./conf/cb-restapigw:/app/conf
+      - ./cb-restapigw/conf:/app/conf
     ports:
       - "8000:8000"
     depends_on:
       - influxdb
-      - grafana
       - jaeger
-#     - hmac_site
-#     - fake_api
-#     - cb-spider
-#     - cb-tumblebug
-#
-# cb-restapigw:
-#   image: nginx
-#   container_name: cb-restapigw
-#   ports:
-#     - "8000:8000"
-#   volumes:
-#     - ./nginx.conf:/etc/nginx/conf.d/cb-restapigw.conf:ro
+#      - hmac_site
+#      - fake_api
+      - cb-spider
+      - cb-tumblebug
