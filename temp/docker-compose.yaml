@@ -59,7 +59,7 @@ services:
 
   # CB-SPIDER
   cb-spider:
-    image: cloudbaristahub/cb-spider:v0.1-20200309
+    image: cloudbaristahub/cb-spider:v0.1-20200316
     container_name: cb-spider
     ports:
       - "1024:1024"
@@ -71,7 +71,7 @@ services:
 
   # CB-TUMBLEBUG
   cb-tumblebug:
-    image: cloudbaristahub/cb-tumblebug:v0.1-20200304
+    image: cloudbaristahub/cb-tumblebug:v0.1-20200313
     container_name: cb-tumblebug
     ports:
       - "1323:1323"
@@ -81,7 +81,7 @@ services:
     volumes:
       - /root/go/src/github.com/cloud-barista/cb-tumblebug/meta_db:/app/meta_db
     environment:
-      - SPIDER_URL=http://cb-restapigw:8000
+      - SPIDER_URL=http://cb-restapigw:8000/spider
 
 # The priority used by Compose to choose which env var value to use:
 # 1. Compose file
