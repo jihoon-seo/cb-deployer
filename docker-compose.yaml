@@ -64,7 +64,7 @@ services:
     ports:
       - "1024:1024"
     volumes:
-      - /root/go/src/github.com/cloud-barista/cb-spider/meta_db:/root/go/src/github.com/cloud-barista/cb-spider/meta_db
+      - ./data/cb-spider:/root/go/src/github.com/cloud-barista/cb-spider/meta_db/dat
     depends_on:
       - cb-restapigw
 
@@ -79,7 +79,7 @@ services:
       - cb-restapigw
       - cb-spider
     volumes:
-      - /root/go/src/github.com/cloud-barista/cb-tumblebug/meta_db:/app/meta_db
+      - ./data/cb-tumblebug:/app/meta_db/dat
     environment:
       - SPIDER_URL=http://cb-restapigw:8000/spider
 
