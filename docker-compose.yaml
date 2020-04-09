@@ -3,7 +3,7 @@ services:
   # Metrics store
   influxdb:
     image: influxdb:latest
-    container_name: cb-apigw-influxdb
+    container_name: cb-influxdb
     ports:
       - "8083:8083"
       - "8086:8086"
@@ -15,7 +15,7 @@ services:
   # Metrics UI
   grafana:
     image: grafana/grafana
-    container_name: cb-apigw-grafana
+    container_name: cb-grafana
     ports:
       - "3100:3000"
     depends_on:
@@ -32,7 +32,7 @@ services:
   # Trace store and UI
   jaeger:
     image: jaegertracing/all-in-one:latest
-    container_name: cb-apigw-jaeger
+    container_name: cb-jaeger
     ports:
       - "14268:14268"
       - "16686:16686"
@@ -59,7 +59,7 @@ services:
 
   # CB-Spider
   cb-spider:
-    image: cloudbaristahub/cb-spider:v0.1-20200326
+    image: cloudbaristahub/cb-spider:v0.1.2-20200403
     container_name: cb-spider
     ports:
       - "1024:1024"
@@ -111,7 +111,7 @@ services:
 
   # CB-RESTAPIGW SERVICE
   cb-restapigw:
-    image: cloudbaristahub/cb-restapigw:v0.1-20200312
+    image: cloudbaristahub/cb-restapigw:v0.1-20200408
     container_name: cb-restapigw
     volumes:
       - ./conf/cb-restapigw:/app/conf
@@ -125,11 +125,3 @@ services:
 #     - fake_api
 #     - cb-spider
 #     - cb-tumblebug
-#
-# cb-restapigw:
-#   image: nginx
-#   container_name: cb-restapigw
-#   ports:
-#     - "8000:8000"
-#   volumes:
-#     - ./nginx.conf:/etc/nginx/conf.d/cb-restapigw.conf:ro
