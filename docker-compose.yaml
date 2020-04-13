@@ -71,7 +71,7 @@ services:
 
   # CB-Tumblebug
   cb-tumblebug:
-    image: cloudbaristahub/cb-tumblebug:v0.1-20200327
+    image: cloudbaristahub/cb-tumblebug:v0.1-20200413
     container_name: cb-tumblebug
     ports:
       - "1323:1323"
