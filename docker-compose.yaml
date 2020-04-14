@@ -59,7 +59,7 @@ services:
 
   # CB-Spider
   cb-spider:
-    image: cloudbaristahub/cb-spider:v0.1.2-20200403
+    image: cloudbaristaorg/cb-spider:v0.1.2-20200403
     container_name: cb-spider
     ports:
       - "1024:1024"
@@ -71,7 +71,7 @@ services:
 
   # CB-Tumblebug
   cb-tumblebug:
-    image: cloudbaristahub/cb-tumblebug:v0.1-20200413
+    image: cloudbaristaorg/cb-tumblebug:v0.1-20200413
     container_name: cb-tumblebug
     ports:
       - "1323:1323"
@@ -92,7 +92,7 @@ services:
 
   # CB-Webtool
   cb-webtool:
-    image: cloudbaristahub/cb-webtool:v0.1-20200326
+    image: cloudbaristaorg/cb-webtool:v0.1-20200326
     container_name: cb-webtool
     ports:
       - "1234:1234"
@@ -111,7 +111,7 @@ services:
 
   # CB-RESTAPIGW SERVICE
   cb-restapigw:
-    image: cloudbaristahub/cb-restapigw:v0.1-20200408
+    image: cloudbaristaorg/cb-restapigw:v0.1-20200408
     container_name: cb-restapigw
     volumes:
       - ./conf/cb-restapigw:/app/conf
