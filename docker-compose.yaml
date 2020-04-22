@@ -3,7 +3,7 @@ services:
   # Metrics store
   influxdb:
     image: influxdb:latest
-    container_name: cb-influxdb
+    container_name: cb-restapigw-influxdb
     ports:
       - "8083:8083"
       - "8086:8086"
@@ -15,7 +15,7 @@ services:
   # Metrics UI
   grafana:
     image: grafana/grafana
-    container_name: cb-grafana
+    container_name: cb-restapigw-grafana
     ports:
       - "3100:3000"
     depends_on:
@@ -32,7 +32,7 @@ services:
   # Trace store and UI
   jaeger:
     image: jaegertracing/all-in-one:latest
-    container_name: cb-jaeger
+    container_name: cb-restapigw-jaeger
     ports:
       - "14268:14268"
       - "16686:16686"
