@@ -20,3 +20,7 @@ $ docker-compose up
 | cb-spider | http://{{host}}:1024/spider | http://{{host}}:8000/spider |   |
 | cb-tumblebug | http://{{host}}:1323/tumblebug | http://{{host}}:8000/tumblebug |   |
 | cb-webtool | http://{{host}}:1234 |   |   |
+| --- |   |   |   |
+| cb-dragonfly | http://{{host}}:9090 |   |   |
+| cb-dragonfly-influxdb | http://{{host}}:28086 |   |   |
+| cb-dragonfly-etcd | http://{{host}}:2379 |   | 2379: client communication / 2380: server-to-server communication |
