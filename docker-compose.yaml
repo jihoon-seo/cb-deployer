@@ -64,7 +64,8 @@ services:
     ports:
       - "1024:1024"
     volumes:
-      - ./data/cb-spider:/root/go/src/github.com/cloud-barista/cb-spider/meta_db/dat
+      - ./data/cb-spider/meta_db:/root/go/src/github.com/cloud-barista/cb-spider/meta_db/dat
+#     - ./data/cb-spider/log:/root/go/src/github.com/cloud-barista/cb-spider/log
     depends_on:
       - cb-restapigw
 
@@ -79,7 +80,8 @@ services:
       - cb-restapigw
       - cb-spider
     volumes:
-      - ./data/cb-tumblebug:/app/meta_db/dat
+      - ./data/cb-tumblebug/meta_db:/app/meta_db/dat
+#     - ./data/cb-tumblebug/log:/app/log
     environment:
       - SPIDER_URL=http://cb-restapigw:8000/spider
 
@@ -96,6 +98,7 @@ services:
     container_name: cb-dragonfly
     volumes:
       - ./conf/cb-dragonfly:/go/src/github.com/cloud-barista/cb-dragonfly/conf
+#     - ./data/cb-dragonfly/log:/go/src/github.com/cloud-barista/cb-dragonfly/log
     ports:
       - "8094:8094"
       - "9090:9090"
@@ -161,6 +164,7 @@ services:
     container_name: cb-restapigw
     volumes:
       - ./conf/cb-restapigw:/app/conf
+#     - ./data/cb-restapigw/log:/app/log
     ports:
       - "8000:8000"
     depends_on:
