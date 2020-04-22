@@ -61,3 +61,12 @@ endpoints:
     backend:
       - host: "http://cb-tumblebug:1323"
         url_pattern: "*bypass"
+
+  #################
+  # For Dragonfly
+  #################
+  - endpoint: "/dragonfly/*bypass"
+    backend:
+      - host: "http://cb-dragonfly:9090"
+        url_pattern: "*bypass"
+

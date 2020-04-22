@@ -21,6 +21,6 @@ $ docker-compose up
 | cb-tumblebug | http://{{host}}:1323/tumblebug | http://{{host}}:8000/tumblebug |   |
 | cb-webtool | http://{{host}}:1234 |   |   |
 | --- |   |   |   |
-| cb-dragonfly | http://{{host}}:9090 |   |   |
+| cb-dragonfly | http://{{host}}:9090/dragonfly | http://{{host}}:8000/dragonfly |   |
 | cb-dragonfly-influxdb | http://{{host}}:28086 |   |   |
 | cb-dragonfly-etcd | http://{{host}}:2379 |   | 2379: client communication <br>2380: server-to-server communication |
