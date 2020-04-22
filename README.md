@@ -13,7 +13,7 @@ $ docker-compose up
 | Name | 직접 접속 주소 | APIGW 통한 접속 주소 | 비고 |
 |---|---|---|---|
 | cb-restapigw | http://{{host}}:8000 |   |   |
-| cb-restapigw-influxdb | http://{{host}}:8086 |   |   |
+| cb-restapigw-influxdb | http://{{host}}:8086 |   | 8083: Admin Panel <br>8086: client-server comm. |
 | cb-restapigw-grafana | http://{{host}}:3100 |   | ID: admin / PW: admin |
 | cb-restapigw-jaeger | http://{{host}}:16686 |   |   |
 | --- |   |   |   |
@@ -23,4 +23,4 @@ $ docker-compose up
 | --- |   |   |   |
 | cb-dragonfly | http://{{host}}:9090 |   |   |
 | cb-dragonfly-influxdb | http://{{host}}:28086 |   |   |
-| cb-dragonfly-etcd | http://{{host}}:2379 |   | 2379: client communication / 2380: server-to-server communication |
+| cb-dragonfly-etcd | http://{{host}}:2379 |   | 2379: client communication <br>2380: server-to-server communication |
