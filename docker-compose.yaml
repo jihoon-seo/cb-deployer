@@ -107,6 +107,7 @@ services:
       - CBSTORE_ROOT=/go/src/github.com/cloud-barista/cb-dragonfly
       - CBLOG_ROOT=/go/src/github.com/cloud-barista/cb-dragonfly
       - CBMON_ROOT=/go/src/github.com/cloud-barista/cb-dragonfly
+      - DRAGONFLY_INFLUXDB_URL=cb-dragonfly-influxdb:8086
 
   # InfluxDB for Dragonfly
   cb-dragonfly-influxdb:
