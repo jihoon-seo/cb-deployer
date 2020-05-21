@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "cloud-barista.fullname" . }}
+  labels:
+    {{- include "cloud-barista.labels" . | nindent 4 }}
+spec:
+{{- if not .Values.cb_spider.autoscaling.enabled }}
+  replicas: {{ .Values.cb_spider.replicaCount }}
+{{- end }}
+  selector:
+    matchLabels:
+      {{- include "cloud-barista.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+    {{- with .Values.cb_spider.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      labels:
+        {{- include "cloud-barista.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.cb_spider.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ .Values.cb_spider.serviceAccountName }}
+      securityContext:
+        {{- toYaml .Values.cb_spider.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.cb_spider.securityContext | nindent 12 }}
+          image: "{{ .Values.cb_spider.image.repository }}:{{ .Values.cb_spider.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.cb_spider.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          resources:
+            {{- toYaml .Values.cb_spider.resources | nindent 12 }}
+      {{- with .Values.cb_spider.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.cb_spider.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.cb_spider.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

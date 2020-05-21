@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "cloud-barista.fullname" . }}-test-connection"
+  labels:
+    {{- include "cloud-barista.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test-success
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['{{ include "cloud-barista.fullname" . }}:{{ .Values.cb_spider.service.port }}']
+  restartPolicy: Never

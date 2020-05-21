@@ -1,0 +1,28 @@
+{{- if .Values.cb_spider.autoscaling.enabled }}
+apiVersion: autoscaling/v2beta1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ include "cloud-barista.fullname" . }}
+  labels:
+    {{- include "cloud-barista.labels" . | nindent 4 }}
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ include "cloud-barista.fullname" . }}
+  minReplicas: {{ .Values.cb_spider.autoscaling.minReplicas }}
+  maxReplicas: {{ .Values.cb_spider.autoscaling.maxReplicas }}
+  metrics:
+  {{- if .Values.cb_spider.autoscaling.targetCPUUtilizationPercentage }}
+    - type: Resource
+      resource:
+        name: cpu
+        targetAverageUtilization: {{ .Values.cb_spider.autoscaling.targetCPUUtilizationPercentage }}
+  {{- end }}
+  {{- if .Values.cb_spider.autoscaling.targetMemoryUtilizationPercentage }}
+    - type: Resource
+      resource:
+        name: memory
+        targetAverageUtilization: {{ .Values.cb_spider.autoscaling.targetMemoryUtilizationPercentage }}
+  {{- end }}
+{{- end }}
